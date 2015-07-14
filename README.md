@@ -1,5 +1,5 @@
 # StartUpBox
-Thanks for giving us an opportuinity to participate in the startupstudio program.The project files of the task that was given to us is uploaded here. We have included an Android project as well as a project in python. Details of 
+Thanks for giving us an opportuinity to participate in the startupstudio program.The project files of the task that was given to us is uploaded here. We have included an Android project ,python and in php. Details of 
 <br>1)Android application
 
 <ul>
@@ -18,3 +18,7 @@ Required Packages
     <li>matplotlib</li>
     <li>scikit-image</li>
 </ul>
+3)PHP
+<ul>
+<li>url of images can be given into entry field</li>
+<li>images are rated if similar or not</li></ul>
