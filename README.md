@@ -22,4 +22,6 @@ Working Video :https://youtu.be/XrBOOlMF23U
 3)PHP
 <ul>
 <li>url of images can be given into entry field</li>
-<li>images are rated if similar or not</li></ul>
+<li>images are rated if similar or not</li>
+<li>Latest php required</li>
+</ul>
