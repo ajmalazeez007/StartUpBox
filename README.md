@@ -11,7 +11,7 @@ Thanks for giving us an opportuinity to participate in the startupstudio program
 <li>url of images can be given into entry field</li>
 <li>percentage of similarity is shown.</li></ul>
 Working Video :https://youtu.be/XrBOOlMF23U
-Required Packages 
+<br>Required Packages 
 
 <ul><li>numpy</li>
     <li>scipy</li>
