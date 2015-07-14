@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f58f023e8005254c695c69e15f65a3adc11d1bd4.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-01bd79f8284608c1475a6fef9800365fc4a31176.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-595af55040512ddc5a8183fcb88e1f4c683b5e96.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/exploded-aar/AnemiaDetector/opencv/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="526e61ee41f8cf59a577a4b662e2ff7d4a60ca32">
+        <dex dex="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-452a70df003b2af14a32eca10f147c25c4dc7f91.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/home/ajmal/Desktop/AnemiaDetector/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-0ed95c46f2b3baa59b5023a67543d711ccf9620a.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/exploded-aar/AnemiaDetector/opencv/unspecified/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e662cb1d8e5f554c39fec982ff5ed37f7051555d">
+        <dex dex="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-787a20576b4de0e946a127e8773640b57f301198.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-8324350ab61cdf3387a716bf8098cff403a88c68.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-244d7a74f104858dacac40c8afb293ca2531c48c.jar" />
+    </item>
+    <item
+        jar="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/home/ajmal/AndroidStudioProjects/AnemiaDetector/app/build/intermediates/pre-dexed/debug/classes-32c7631e4b24b505b48ee837ea359f4df598b168.jar" />
+    </item>
+
+</items>

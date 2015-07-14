@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#199442"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+<Button
+    android:id="@+id/image1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Image 1"/>
+    <Button
+        android:id="@+id/image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image 2"/>
+    <Button
+        android:id="@+id/compare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Compare"/>
+    <EditText
+        android:background="#fff"
+        android:textColor="#000"
+        android:id="@+id/et1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <EditText
+        android:layout_marginTop="20dp"
+        android:id="@+id/et2"
+        android:background="#fff"
+        android:textColor="#000"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+    <ImageView
+        android:id="@+id/img2"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+</LinearLayout>

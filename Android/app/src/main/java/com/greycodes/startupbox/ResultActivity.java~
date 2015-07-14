@@ -1,0 +1,103 @@
+package com.greycodes.anemiadetector;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+public class ResultActivity extends ActionBarActivity {
+AnemiaDataBase anemiaDataBase;
+int rbccount;
+    TextView textView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result);
+        textView= (TextView) findViewById(R.id.tv_result);
+        //rbc count --toast
+        //rbc in millions textview,mcv value,anemic or not
+
+        anemiaDataBase = new AnemiaDataBase(getApplicationContext());
+        SQLiteDatabase db = anemiaDataBase.getSQLiteDataBase();
+        String[] columns = new String[]{"RBC"};
+        int values=0;
+        String pid[]= new String[]{""+getIntent().getStringExtra("pid")};
+        int m=getIntent().getIntExtra("mag",200);
+        int area=getIntent().getIntExtra("area",200);
+                Cursor cursor= db.query("PATIENTRECORD", columns, "PID=?", pid, null, null, null);
+        cursor.moveToFirst();
+        while(cursor.moveToNext()){
+            values+=cursor.getInt(cursor.getColumnIndex("RBC"));
+        }
+         cursor= db.query("PATIENT", columns, "PID=?", pid, null, null, null);
+        cursor.moveToFirst();
+        double hemetro=0.4;
+        while (cursor.moveToNext()){
+           String gender= cursor.getString(cursor.getColumnIndex("SEX"));
+            if (gender.startsWith("m")||gender.startsWith("M")){
+                 hemetro=0.45;
+            }else{
+                 hemetro=0.4;
+
+            }
+        }
+
+        area=(int)3.14*area*area;
+        values=values/cursor.getCount();
+       double rbc = (values*10)/((area/(m*m)*.1));
+
+       double mcv=hemetro/rbc;
+      //  rbc = value*dilution factor/((imageare/magnification^2)*filmthickness)
+
+        //int mcv=hematocrit/rbc;
+        //rbc value in millions/cumm
+        //mcv in femtolitre
+        /*
+        hematocrit male =.45
+        frmale =.4
+         */
+        //btw 80-100  normal
+        //60-80 anemic
+        Toast.makeText(getApplicationContext(),"rbc "+rbc,Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"mcv "+mcv,Toast.LENGTH_LONG).show();
+if(mcv>=80&&mcv<100){
+//normal
+    textView.setText("The person has no anemia ");
+}else if(mcv<80&&mcv>60){
+//chancee
+    textView.setText("The person has chance of anemia ");
+}else{
+    //anemic
+    textView.setText("The person has  anemia ");
+}
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_result, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+}

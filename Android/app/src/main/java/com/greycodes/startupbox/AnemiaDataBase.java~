@@ -1,0 +1,106 @@
+package com.greycodes.anemiadetector;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+public class AnemiaDataBase {
+    Context context;
+    AnemiaDatabaseHelper helper;
+    SQLiteDatabase db;
+    public AnemiaDataBase(Context context) {
+        // TODO Auto-generated constructor stub
+        this.context = context;
+
+        helper= new AnemiaDatabaseHelper();
+    }
+
+    public long insetRecord(int pid,int rbc){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("PID", pid);
+        contentvalues.put("RBC", rbc);
+
+        long flag=	db.insert("PATIENTRECORD", null, contentvalues);
+        if(flag<0){
+            Toast.makeText(context,"Inserted",Toast.LENGTH_LONG).show();
+
+        }else{
+        }
+        return flag;
+    }
+
+    public long insetPatient(String pid,String name,String age,String sex){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues contentvalues = new ContentValues();
+        contentvalues.put("PID", pid);
+        contentvalues.put("NAME", name);
+        contentvalues.put("AGE", age);
+        contentvalues.put("SEX", sex);
+
+        long flag=	db.insert("PATIENT", null, contentvalues);
+        if(flag<0){
+            Toast.makeText(context,"Inserted",Toast.LENGTH_LONG).show();
+        }else{
+        }
+        return flag;
+    }
+    public SQLiteDatabase getSQLiteDataBase(){
+        helper= new AnemiaDatabaseHelper();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        return db;
+    }
+    public String getdata(){
+        helper= new AnemiaDatabaseHelper();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String[] columns = new String[]{"FORMAT"};
+        String values=null;
+        Cursor cursor= db.query("COMPETITION", columns, null, null, null, null, null);
+        while(cursor.moveToNext()){
+            values=cursor.getString(cursor.getColumnIndex("FORMAT"));
+        }
+
+        return values;
+
+    }
+
+    private class AnemiaDatabaseHelper extends SQLiteOpenHelper{
+        static final int Database_version=2;
+        static final String Database_name= "anemia.db";
+
+        static final String Create_patient= "CREATE TABLE PATIENT (PID INT PRIMARY KEY NOT NULL,NAME VARCHAR(30) NOT NULL,AGE VARCHAR(5) NOT NULL,SEX VARCHAR(10) NOT NULL);";
+        static final String Create_record= "CREATE TABLE PATIENTRECORD (RID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,PID INT NOT NULL,RBC INT NOT NULL);";
+       // static final String Create_newsfeeds = "CREATE TABLE NEWSFEED (NID INT PRIMARY KEY NOT NULL,SUBJECT VARCHAR NOT NULL,MESSAGE VARCHAR NOT NULL,PCODE INT NOT NULL);";
+       // static final String Create_WorkshopSeminar= "CREATE TABLE WORKSHOPSEMINAR (TSID INT PRIMARY KEY NOT NULL,TOPIC VARCHAR NOT NULL,INTRO VARCHAR NOT NULL,DATE VARCHAR NOT NULL,CORDINATOR VARCHAR(30) NOT NULL,MOB VARCHAR(15) NOT NULL);";
+       // static final String Create_dotIssue = "CREATE TABLE DOTISSUE (TSID INT PRIMARY KEY NOT NULL,INTRO VARCHAR NOT NULL,TOPIC VARCHAR NOT NULL,MODEARATOR VARCHAR NOT NULL,MODDESC VARCHAR NOT NULL,MODIMAGE BLOB,S1NAME VARCHAR NOT NULL,S1DESC VARCHAR NOT NULL,S1IMAGE BLOB NOT NULL,S2NAME VARCHAR NOT NULL,S2DESC VARCHAR NOT NULL,S2IMAGE BLOB NOT NULL,S3NAME VARCHAR NOT NULL,S3DESC VARCAHR NOT NULL,S3IMAGE BLOB,S4NAME VARCAHR NOT NULL,S4DESC VARCHAR NOT NULL,S4IMAGE BLOB NOT NULL,S5NAME VARCHAR NOT NULL,S5DESC VARCHAR NOT NULL,S5IMAGE BLOB NOT NULL,EVENTDETAILS VARCHAR NOT NULL,DATE VARCHAR NOT NULL,CORDINATOR VARCHAR NOT NULL,MOB VARCHAR NOT NULL);";
+        public AnemiaDatabaseHelper() {
+            super(context, Database_name, null, Database_version);
+        }
+
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            // TODO Auto-generated method stub
+            try {
+                db.execSQL(Create_patient);
+                db.execSQL(Create_record);
+
+
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            // TODO Auto-generated method stub
+
+        }
+
+    }
+}

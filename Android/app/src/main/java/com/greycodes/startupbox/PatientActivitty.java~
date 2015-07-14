@@ -1,0 +1,259 @@
+package com.greycodes.anemiadetector;
+
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
+
+import java.io.IOException;
+
+
+public class PatientActivitty extends ActionBarActivity {
+    RadioGroup radioGroup;
+    private static int RESULT_LOAD_IMG = 1;
+    public static final int CAMERA_PIC_REQUEST = 120;
+    String imgDecodableString;
+    Button loadCamera,loadGallery,result;
+    AnemiaDataBase anemiaDataBase;
+    final String TAG = "Animea";
+    int i;
+    EditText etId;
+    Bitmap imageBmp;
+    static {
+        if (!OpenCVLoader.initDebug()) {
+            // Handle initialization error
+        }
+    }
+
+    private BaseLoaderCallback mOpenCVCallBack = new BaseLoaderCallback(this) {
+        @Override
+        public void onManagerConnected(int status) {
+            switch (status) {
+                case LoaderCallbackInterface.SUCCESS:
+                {
+                    Log.i(TAG, "OpenCV loaded successfully");
+                    // Create and set View
+                    setContentView(R.layout.patient_home);
+
+                    anemiaDataBase = new AnemiaDataBase(getApplicationContext());
+                    result =(Button) findViewById(R.id.result);
+                    radioGroup = (RadioGroup) findViewById(R.id.rb);
+
+
+                    loadGallery = (Button) findViewById(R.id.loadpre);
+                    loadCamera = (Button) findViewById(R.id.capture);
+                    etId = (EditText) findViewById(R.id.et_patientid);
+
+                    loadCamera.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent photo= new Intent("android.media.action.IMAGE_CAPTURE");
+                            startActivityForResult(photo, CAMERA_PIC_REQUEST);
+                        }
+                    });
+                    loadGallery.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            // Start the Intent
+                            startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+                        }
+                    });
+
+                    result.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            int m=0,area=0;
+                            if(!etId.getText().toString().equals("")){
+                                switch (radioGroup.getCheckedRadioButtonId()){
+                                    case R.id.rb200 :
+                                        m=200;  break;
+                                    case R.id.rb400 :
+                                        m=400;   break;
+                                }
+                                if(m!=0){
+                                    area=imageBmp.getWidth()*imageBmp.getHeight();
+                                    Intent intent= new Intent(PatientActivitty.this,ResultActivity.class);
+                                    intent.putExtra("pid",etId.getText().toString());
+                                    intent.putExtra("mag",m);
+                                    intent.putExtra("area",area);
+                                    startActivity(intent);
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"Please select magnification",Toast.LENGTH_LONG).show();
+
+                                }
+
+                            }else{
+                                Toast.makeText(getApplicationContext(),"Enter patient id",Toast.LENGTH_LONG).show();
+
+                            }
+
+                        }
+                    });
+                } break;
+                default:
+                {
+                    super.onManagerConnected(status);
+                } break;
+            }
+        }
+    };
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.i(TAG, "Trying to load OpenCV library");
+        if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack))
+        {
+            Toast.makeText(getApplicationContext(),"Cannot connect to OpenCV Manager",Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Cannot connect to OpenCV Manager");
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_patient_activitty, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public Bitmap circle(Bitmap bitmap){
+
+        try {
+
+             imageBmp=bitmap; 
+            Mat imgSource = new Mat(), imgCirclesOut = new Mat();
+
+            Utils.bitmapToMat(imageBmp, imgSource);
+
+
+            Imgproc.cvtColor(imgSource, imgSource, Imgproc.COLOR_RGB2GRAY);
+
+            Utils.matToBitmap(imgSource, imageBmp);
+
+
+            Imgproc.threshold(imgSource, imgSource, 0, 255, Imgproc.THRESH_OTSU);
+
+            Imgproc.Canny(imgSource, imgSource, 300, 600, 5, true);
+
+            Imgproc.HoughCircles( imgSource, imgCirclesOut, Imgproc.CV_HOUGH_GRADIENT, 1, imgSource.rows()/8, 200, 100, 0, 100 );
+
+            float circle[] = new float[3];
+
+            for ( i = 0; i < imgCirclesOut.cols(); i++)
+            {
+                imgCirclesOut.get(0, i, circle);
+                org.opencv.core.Point center = new org.opencv.core.Point();
+                center.x = circle[0];
+                center.y = circle[1];
+                Core.circle(imgSource, center, (int) circle[2], new Scalar(255, 0, 0, 255), 4);
+            }
+            final Bitmap bmp = Bitmap.createBitmap(imageBmp.getWidth(), imageBmp.getHeight(), Bitmap.Config.ARGB_8888);
+
+            Utils.matToBitmap(imgSource, bmp);
+
+
+
+
+
+            try {
+                if(!etId.getText().toString().equals("")){
+                    anemiaDataBase.insetRecord(Integer.parseInt(etId.getText().toString()),imgCirclesOut.cols());
+                }else{
+                    Toast.makeText(getApplicationContext(),"Enter patient id",Toast.LENGTH_LONG).show();
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return  bmp;
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+            // When an Image is picked
+
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
+
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Get the cursor
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+
+
+
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+
+                Bitmap bitmap= BitmapFactory.decodeFile(imgDecodableString);
+
+
+
+
+                 circle(bitmap);
+
+
+
+
+            } else {
+                Toast.makeText(this, "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+            }
+       }
+   
+    }
+
