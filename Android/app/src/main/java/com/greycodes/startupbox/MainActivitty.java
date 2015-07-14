@@ -62,14 +62,8 @@ public class MainActivitty extends ActionBarActivity {
                 {
                     Log.i(TAG, "OpenCV loaded successfully");
                     // Create and set View
-                    setContentView(R.layout.activity_main);
-                    image1 = (Button) findViewById(R.id.image1);
-                    image2 = (Button) findViewById(R.id.image2);
-                    compare = (TextView) findViewById(R.id.compare);
-                    img1 = (ImageView) findViewById(R.id.img1);
-                    img2 = (ImageView) findViewById(R.id.img2);
-                    et1 = (EditText) findViewById(R.id.et1);
-                    et2 = (EditText) findViewById(R.id.et2);
+
+
 
 
                     img1.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +133,7 @@ public class MainActivitty extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         set1=false;
         set2=false;
+        setContentView(R.layout.activity_main);
         Log.i(TAG, "Trying to load OpenCV library");
 
         if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_2, this, mOpenCVCallBack))
@@ -269,6 +264,20 @@ public class MainActivitty extends ActionBarActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        image1 = (Button) findViewById(R.id.image1);
+        image2 = (Button) findViewById(R.id.image2);
+        compare = (TextView) findViewById(R.id.compare);
+        img1 = (ImageView) findViewById(R.id.img1);
+        img2 = (ImageView) findViewById(R.id.img2);
+        et1 = (EditText) findViewById(R.id.et1);
+        et2 = (EditText) findViewById(R.id.et2);
+
+
+    }
+
     void compare(){
         Mat mat1 = new Mat ( img1.getHeight(), img1.getWidth(), CvType.CV_8U, new Scalar(4));
         Mat mat2 = new Mat ( img2.getHeight(), img2.getWidth(), CvType.CV_8U, new Scalar(4));
@@ -281,9 +290,14 @@ public class MainActivitty extends ActionBarActivity {
 
         }else {
             int per = 100 -(int)(val*100);
-            Toast.makeText(getApplicationContext(),"percentage "+per,Toast.LENGTH_LONG).show();
             Intent intent = new Intent(MainActivitty.this,ResultActivity.class);
             intent.putExtra("result",per);
+            set1=false;
+            set2=false;
+            et1.setText("");
+            et2.setText("");
+            img1.setImageResource(R.drawable.img);
+            img2.setImageResource(R.drawable.img);
             startActivity(intent);
             overridePendingTransition(R.anim.fadeinright,R.anim.fadeoutleft);
 

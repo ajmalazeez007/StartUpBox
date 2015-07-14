@@ -16,8 +16,7 @@ public class ResultActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        per= getIntent().getIntExtra("result",50);
-        Toast.makeText(getApplicationContext(),"result ac"+per,Toast.LENGTH_LONG).show();
+        per= getIntent().getIntExtra("result",0);
         arcProgress = (ArcProgress) findViewById(R.id.arc_progress);
         arcProgress.setProgress(per);
 
