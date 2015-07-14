@@ -4,6 +4,7 @@
     <string name="app_name">StratUp Box</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_patient_activitty">PatientActivitty</string>
+    <string name="title_activity_patient_activitty">StartUpBox</string>
+    <string name="title_activity_result">ResultActivity</string>
 
 </resources>

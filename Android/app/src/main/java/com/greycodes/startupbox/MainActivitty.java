@@ -280,6 +280,9 @@ public class MainActivitty extends ActionBarActivity {
         }else {
             int per = 100 -(int)(val*100);
             Toast.makeText(getApplicationContext(),"percentage "+per,Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivitty.this,ResultActivity.class);
+            intent.putExtra("result",per);
+            startActivity(intent);
 
         }
     }
