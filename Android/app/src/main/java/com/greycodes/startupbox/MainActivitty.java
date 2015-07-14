@@ -285,6 +285,7 @@ public class MainActivitty extends ActionBarActivity {
             Intent intent = new Intent(MainActivitty.this,ResultActivity.class);
             intent.putExtra("result",per);
             startActivity(intent);
+            overridePendingTransition(R.anim.fadeinright,R.anim.fadeoutleft);
 
         }
     }
