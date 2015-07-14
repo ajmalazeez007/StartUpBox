@@ -17,6 +17,12 @@ public class ResultActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         per= getIntent().getIntExtra("result",0);
+        if (per<0){
+            per=0;
+        }
+        if (per>100){
+            per=100;
+        }
         arcProgress = (ArcProgress) findViewById(R.id.arc_progress);
         arcProgress.setProgress(per);
 

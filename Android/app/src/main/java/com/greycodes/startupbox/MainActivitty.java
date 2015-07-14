@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
@@ -279,12 +280,14 @@ public class MainActivitty extends ActionBarActivity {
     }
 
     void compare(){
+        btm1= getResizedBitmap(btm1,300,300);
+        btm2= getResizedBitmap(btm2,300,300);
         Mat mat1 = new Mat ( img1.getHeight(), img1.getWidth(), CvType.CV_8U, new Scalar(4));
         Mat mat2 = new Mat ( img2.getHeight(), img2.getWidth(), CvType.CV_8U, new Scalar(4));
 
         Utils.bitmapToMat(btm1, mat1);
         Utils.bitmapToMat(btm2, mat2);
-        double val=     getSimilarity(mat1,mat2);
+        double val=     getSimilarity(mat1, mat2);
         if (val>=100000000.0){
             Toast.makeText(getApplicationContext(),"Images are of different size",Toast.LENGTH_LONG).show();
 
@@ -303,6 +306,24 @@ public class MainActivitty extends ActionBarActivity {
 
         }
     }
-   
+
+
+    public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
     }
+
+
+}
 
