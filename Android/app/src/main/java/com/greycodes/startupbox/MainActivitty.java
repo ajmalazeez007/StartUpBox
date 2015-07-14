@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -37,7 +38,8 @@ import static org.opencv.core.Core.norm;
 
 public class MainActivitty extends ActionBarActivity {
    final String TAG = "Imae";
-    Button image1,image2,compare;
+    Button image1,image2;
+    TextView compare;
     ImageView img1,img2;
     Bitmap btm1,btm2;
     boolean set1,set2;
@@ -63,14 +65,14 @@ public class MainActivitty extends ActionBarActivity {
                     setContentView(R.layout.activity_main);
                     image1 = (Button) findViewById(R.id.image1);
                     image2 = (Button) findViewById(R.id.image2);
-                    compare = (Button) findViewById(R.id.compare);
+                    compare = (TextView) findViewById(R.id.compare);
                     img1 = (ImageView) findViewById(R.id.img1);
                     img2 = (ImageView) findViewById(R.id.img2);
                     et1 = (EditText) findViewById(R.id.et1);
                     et2 = (EditText) findViewById(R.id.et2);
 
 
-                    image1.setOnClickListener(new View.OnClickListener() {
+                    img1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(
@@ -80,7 +82,7 @@ public class MainActivitty extends ActionBarActivity {
                             startActivityForResult(i, 1);
                         }
                     });
-                    image2.setOnClickListener(new View.OnClickListener() {
+                    img2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(
