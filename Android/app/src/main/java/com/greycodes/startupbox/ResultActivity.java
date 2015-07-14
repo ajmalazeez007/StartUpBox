@@ -1,20 +1,27 @@
 package com.greycodes.startupbox;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.github.lzyzsd.circleprogress.ArcProgress;
+
 
 public class ResultActivity extends ActionBarActivity {
         int per;
+     ArcProgress arcProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         per= getIntent().getIntExtra("result",50);
         Toast.makeText(getApplicationContext(),"result ac"+per,Toast.LENGTH_LONG).show();
+        arcProgress = (ArcProgress) findViewById(R.id.arc_progress);
+        arcProgress.setProgress(per);
+
+
     }
 
     @Override

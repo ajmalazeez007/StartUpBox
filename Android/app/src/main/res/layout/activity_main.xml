@@ -24,9 +24,10 @@
         <EditText
             android:id="@+id/et1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_margin="16dp"
             android:paddingLeft="16dp"
+            android:singleLine="false"
             android:hint="Enter URL here"
             android:background="@drawable/rounded_edittext"
             android:textColor="#000" />
@@ -42,7 +43,8 @@
         <EditText
             android:id="@+id/et2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
+            android:singleLine="false"
             android:layout_margin="16dp"
             android:hint="Enter URL here"
             android:paddingLeft="16dp"
